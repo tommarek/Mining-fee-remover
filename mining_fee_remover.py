@@ -77,13 +77,13 @@ class FeeRemover(object):
         payload.set_verdict_modified(nfqueue.NF_ACCEPT, str(pkt), len(pkt))
 
     def run(self):
-        print 'Starting claymore packet remover'
-        os.system('iptables -A OUTPUT -p tcp --dport {0} -j NFQUEUE --queue-num 0'.format(int(port)))
+        print 'Starting mining fee remover...'
+        os.system('iptables -A OUTPUT -p tcp --dport {0} -j NFQUEUE --queue-num 0'.format(int(self.port)))
         q = nfqueue.queue()
         q.open()
         q.set_callback(self._callback)
         q.create_queue(0)
-        print 'Started'
+        print 'Started.'
 
         try:
             q.try_run()
@@ -91,7 +91,7 @@ class FeeRemover(object):
             q.unbind(socket.AF_INET)
             q.close()
         finally:
-            os.system('iptables -D OUTPUT -p tcp --dport {0} -j NFQUEUE --queue-num 0'.format(int(port)))
+            os.system('iptables -D OUTPUT -p tcp --dport {0} -j NFQUEUE --queue-num 0'.format(int(self.port)))
 
 if __name__ == "__main__":
     fr = FeeRemover(
