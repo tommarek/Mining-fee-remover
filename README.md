@@ -1,5 +1,6 @@
 # Mining-fee-remover
-Remove mining fees from Claymore's miner - mine into your own wallet instead. This currently only works on Linux/EthOS.
+Remove mining fees from Claymore's miner - mine into your own wallet instead. This currently only works on Linux.
+Tested with version 9.8.
 
 # How?
 
@@ -7,6 +8,7 @@ This program catches login packets sent to a ethereum stratum pool and modifies 
 
 # TODO:
 
+- this doesn't work on latest version of EthOS because of incompatible nfqueue version. Will make it work ASAP.
 - Add config file
 - Add support for custom worker names. This doesn't work now as modifying packet lenght forces pool to close connection.
 - Windows version?
@@ -30,7 +32,7 @@ sudo apt-get install python-nfqueue python-scapy git
 ## EthOS
 
 ```
-TODO:
+TODO
 ```
 
 Clone this repository:
@@ -50,22 +52,27 @@ and save the modified file.
 
 # Running the program
 
+You need to turn off firewall to catch the packets:
+```
+sudo ufw disable
+```
+
 ```
 cd Mining-fee-remover
 ```
 
-and run the program by executing
+And run the program by executing (It needs to run as root because it's modifying iptables):
 ```
-./mining_fee_remover.py
+sudo ./mining_fee_remover.py
 ```
 
 If you want the program to run in the background - so you can close the terminal window, run:
 
 ```
-./mining_fee_remover.py &
+sudo ./mining_fee_remover.py &
 ```
 
-And then start your miner. Once the miner starts mining the dev fee it should mine to the wallet you've put into the source code.
+Now you can start your miner. Once the miner starts mining the dev fee it should mine to the wallet you've put into the source code.
 
 # Help
 If you need any help then let me know and I'll try to help you.
@@ -76,7 +83,9 @@ I created this as it was a really interesting thing to do and it might help othe
 
 # Donations
 If you found this useful please consider donating at least a small amount to:
+
 ETH: `0xda3e1e7822589a26e9705E184fC340e0731935eA`
+
 BTC: `3LE91QD9aCoCsM9vF8PXs755Vr7bmnoexQ`
 
 
