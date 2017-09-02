@@ -63,7 +63,7 @@ class FeeRemover(object):
                 if not self.eth_wallet in pl_text:
                     print 'Received: "{0}"'.format(pl_text.strip())
                     #new_pl_text = re.sub(r'"0x[0-9A-Fa-f\.\/]+.*?"', '"'+self.eth_wallet+self.worker_suffix+'"', pl_text)
-                    new_pl_text = re.sub(r'0x[0-9A-Fa-f\.\/]+', self.eth_wallet, pl_text)
+                    new_pl_text = re.sub(r'0x[0-9A-Fa-f]+', self.eth_wallet, pl_text)
                     print 'Sending: "{0}"'.format(new_pl_text.strip())
 
             # update packet
