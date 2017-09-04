@@ -1,5 +1,5 @@
 # Mining-fee-remover
-Remove mining fees from Claymore's miner - mine into your own wallet instead. This currently only works on Linux.
+Remove mining fees from Claymore's miner - mine into your own wallet instead. This currently only works on Linux and EthOS.
 Tested with version 9.8.
 
 # How?
@@ -8,30 +8,28 @@ This program catches login packets sent to a ethereum stratum pool and modifies 
 
 # TODO:
 
-- this doesn't work on latest version of EthOS because of incompatible nfqueue version. Will make it work ASAP.
 - Add config file
 - Add support for custom worker names. This doesn't work now as modifying packet lenght forces pool to close connection.
 - Windows version?
 
 # Requirements
 
-- Python 2.7
-- python-nfqueue
-- python-scapy
+- Python3
+- virtualenv
 
-# installation
+# Installation
 
 Install requrements:
 
 ## Ubuntu
 
 ```
-sudo apt-get install virtualenv python3  build-essential python-dev libnetfilter-queue-dev 
+sudo apt-get install virtualenv python3 build-essential python-dev libnetfilter-queue-dev 
 ```
 
 Clone this repository:
 ```
-git clone git@github.com:tommarek/Mining-fee-remover.git
+git clone https://github.com/tommarek/Mining-fee-remover.git
 cd Mining-fee-remover
 ```
 
@@ -59,7 +57,7 @@ sudo apt-get-ubuntu install build-essential python-dev libnetfilter-queue-dev
 
 Clone this repository:
 ```
-git clone git@github.com:tommarek/Mining-fee-remover.git
+git clone https://github.com/tommarek/Mining-fee-remover.git
 cd Mining-fee-remover
 ```
 
@@ -75,10 +73,10 @@ pip3 install -r requirements.txt
 
 This version of fee remover doesn't support config files so you will need to modify the source code.
 You need to change:
-- `pool` to the pool you are using
-- `port` to the pool connection port
-- `eth_wallet` address `0xda3e1e7822589a26e9705E184fC340e0731935eA` to yours (on line 102)
-- `password` to your password
+- `pool` to the pool you are using (on line 88)
+- `port` to the pool connection port (on line 89)
+- `eth_wallet` address `0xda3e1e7822589a26e9705E184fC340e0731935eA` to yours (on line 90)
+- `password` to your password (on line 91)
 and save the modified file.
 
 # Running the program
@@ -113,7 +111,6 @@ To deactivate virtualenv run
 ```
 deactivate
 ```
-
 
 # Help
 If you need any help then let me know and I'll try to help you.
