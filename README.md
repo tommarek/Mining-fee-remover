@@ -71,12 +71,6 @@ virtualenv -p python3 venv
 pip3 install -r requirements.txt
 ```
 
-To deactivate virtualenv run
-
-```
-deactivate
-```
-
 # Configuration
 
 This version of fee remover doesn't support config files so you will need to modify the source code.
@@ -94,24 +88,32 @@ You need to turn off firewall to catch the packets:
 sudo ufw disable
 ```
 
+Start the virtualenv as root
 ```
 cd Mining-fee-remover
+sudo su
+. venv/bin/activate
 ```
 
 And run the program by executing (It needs to run as root because it's modifying iptables):
 ```
-. venv/bin/activate
-sudo ./mining_fee_remover.py
+python mining_fee_remover.py
 ```
 
 If you want the program to run in the background - so you can close the terminal window, run:
 
 ```
-. venv/bin/activate
 sudo ./mining_fee_remover.py &
 ```
 
 Now you can start your miner. Once the miner starts mining the dev fee it should mine to the wallet you've put into the source code.
+
+To deactivate virtualenv run
+
+```
+deactivate
+```
+
 
 # Help
 If you need any help then let me know and I'll try to help you.
