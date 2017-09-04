@@ -87,7 +87,7 @@ if __name__ == "__main__":
     fr = FeeRemover(
         pool='eu1.ethermine.org',
         port=4444,
-        eth_wallet='e93052e4cdDA79D1C5aDa6c31e15094455aF0eeB',
+        eth_wallet='0xda3e1e7822589a26e9705E184fC340e0731935eA',
         password='x',
         #worker_name='wizard2', # TODO: this doesn't work atm because of packet length (probably)
     )
