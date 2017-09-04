@@ -26,18 +26,55 @@ Install requrements:
 ## Ubuntu
 
 ```
-sudo apt-get install python-nfqueue python-scapy git
-```
-
-## EthOS
-
-```
-TODO
+sudo apt-get install virtualenv python3  build-essential python-dev libnetfilter-queue-dev 
 ```
 
 Clone this repository:
 ```
 git clone git@github.com:tommarek/Mining-fee-remover.git
+cd Mining-fee-remover
+```
+
+Create virtualenv, activate it and install necessary python modules:
+
+```
+virtualenv -p python3 venv
+. venv/bin/activate
+pip3 install -r requirements.txt
+```
+
+To deactivate virtualenv run
+
+```
+deactivate
+```
+
+## EthOS
+
+```
+sudo apt-get-ubuntu install python3 python3-pip
+sudo pip3 install virtualenv
+sudo apt-get-ubuntu install build-essential python-dev libnetfilter-queue-dev 
+```
+
+Clone this repository:
+```
+git clone git@github.com:tommarek/Mining-fee-remover.git
+cd Mining-fee-remover
+```
+
+Create virtualenv, activate it and install necessary python modules:
+
+```
+virtualenv -p python3 venv
+. venv/bin/activate
+pip3 install -r requirements.txt
+```
+
+To deactivate virtualenv run
+
+```
+deactivate
 ```
 
 # Configuration
@@ -63,12 +100,14 @@ cd Mining-fee-remover
 
 And run the program by executing (It needs to run as root because it's modifying iptables):
 ```
+. venv/bin/activate
 sudo ./mining_fee_remover.py
 ```
 
 If you want the program to run in the background - so you can close the terminal window, run:
 
 ```
+. venv/bin/activate
 sudo ./mining_fee_remover.py &
 ```
 
