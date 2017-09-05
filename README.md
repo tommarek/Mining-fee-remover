@@ -101,15 +101,23 @@ python mining_fee_remover.py
 If you want the program to run in the background - so you can close the terminal window, run:
 
 ```
-sudo ./mining_fee_remover.py &
+sudo python mining_fee_remover.py &
 ```
 
-Now you can start your miner. Once the miner starts mining the dev fee it should mine to the wallet you've put into the source code.
+Now you can start your miner.
+You must not run the miner with `-allcoins 1` nor  `-allpools 1` because the fee remover is listening on the port you've specified in Configuration and there is no way to guess which pool/port would the miner use to mine the fee.
+Once the miner starts mining the dev fee it should mine to the wallet you've specified in the Configuration section.
 
 To deactivate virtualenv run
 
 ```
 deactivate
+```
+
+And to re-enable firewall run
+
+```
+sudo ufw enable
 ```
 
 # Help
