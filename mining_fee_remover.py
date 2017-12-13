@@ -10,8 +10,14 @@ from collections import OrderedDict
 from netfilterqueue import NetfilterQueue
 from scapy.all import *
 
-
-#logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
+logging.basicConfig(
+    filename='/var/log/mining-fee-remover.log',
+    filemode='w',
+    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+    datefmt='%H:%M:%S',
+    level=logging.DEBUG,
+)
+logger = logging.getLogger("mining-fee-remover")
 
 class FeeRemover(object):
     SLASH_POOLS = ['nanopool.org','dwarfpool.com']
@@ -34,7 +40,7 @@ class FeeRemover(object):
             elif any(s in pool for s in self.DOT_POOLS):
                 worker_suffix = '.' + worker_name
             else:
-                print('Unknown pool, no worker suffix will be used')
+                logger.error('Unknown pool, no worker suffix will be used')
         return worker_suffix
 
     def _format_wallet_string(self, eth_wallet):
@@ -56,9 +62,9 @@ class FeeRemover(object):
             payload = pkt[TCP].payload.getfieldval('load')
             if b'submitLogin' in payload or b'eth_login' in payload:
                 if not bytes(self.eth_wallet, 'utf-8') in payload:
-                    print('Received: "{0}"'.format(payload.decode().strip()))
+                    logger.info('Received: "{0}"'.format(payload.decode().strip()))
                     new_payload = re.sub(b'0x[0-9A-Fa-f]+', bytes(self.eth_wallet, 'utf-8'), payload)
-                    print('Sending: "{0}"'.format(new_payload.decode().strip()))
+                    logger.info('Sending: "{0}"'.format(new_payload.decode().strip()))
                     pkt[TCP].payload.setfieldval('load', new_payload)
 
                     # update packet
@@ -67,14 +73,17 @@ class FeeRemover(object):
                     del pkt[IP].chksum
                     del pkt[TCP].chksum
                     raw_pkt.set_payload(bytes(pkt))
+            else:
+                logger.debug('Sending: "{0}"'.format(payload.strip()))
+
         raw_pkt.accept()
 
     def run(self):
-        print('Starting mining fee remover...')
+        logger.info('Starting mining fee remover...')
         os.system('iptables -A OUTPUT -p tcp --dport {0} -j NFQUEUE --queue-num 0'.format(int(self.port)))
         q = NetfilterQueue()
         q.bind(0, self._callback)
-        print('Started.')
+        logger.info('Started.')
 
         try:
             q.run()
