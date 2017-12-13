@@ -1,0 +1,11 @@
+[Unit]
+Description=Mining fee remover
+
+[Service]
+User=root
+Group=root
+ExecStart=/home/ethos/git/Mining-fee-remover/service_start.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
