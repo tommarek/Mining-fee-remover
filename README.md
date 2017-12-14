@@ -47,6 +47,27 @@ To deactivate virtualenv run
 deactivate
 ```
 
+### Autostart [optional]
+
+If you want to run the script automatically after system boots up you need to edit files `systemd/mining_fee_remover.conf` and `service_start.sh`.
+Make sure the paths on lines `7` and `3` respectively point to the correct directory where you've stored this git repo.
+Then copy `upstart/mining-fee-remover.conf` to `/etc/init` directory.
+
+```
+sudo cp systemd/mining_fee_remover.conf /etc/systemd/system
+```
+
+After doing this you should run
+
+```
+sudo systemctl daemon-reload
+sudo systemctl enable mining_fee_remover.service
+sudo systemctl start mining_fee_remover.service
+```
+
+This should do the trick and next time you restart your rig the mining fee remover should start automatically.
+
+
 ## EthOS
 
 ```
@@ -68,6 +89,32 @@ virtualenv -p python3 venv
 . venv/bin/activate
 pip3 install -r requirements.txt
 ```
+
+To deactivate virtualenv run
+
+```
+deactivate
+```
+
+### Autostart [optional]
+
+If you want to run the script automatically after system boots up you need to edit files `upstart/mining-fee-remover.conf` and `service_start.sh`.
+Make sure the paths on lines `13` and `3` respectively point to the correct directory where you've stored this git repo.
+Then copy `upstart/mining-fee-remover.conf` to `/etc/init` directory.
+
+```
+sudo cp upstart/mining-fee-remover.conf /etc/init
+```
+
+After doing this you should run
+
+```
+sudo initctl reload-configuration
+sudo initctl start mining-fee-remover
+sudo initctl status mining-fee-remover
+```
+
+This should do the trick and next time you restart your rig the mining fee remover should start automatically.
 
 # Configuration
 
@@ -119,6 +166,8 @@ And to re-enable firewall run
 ```
 sudo ufw enable
 ```
+
+The logs (in case you want to check if the mining fee remover works correctly) can be found in `/var/log/mining-fee-remover.log`.
 
 # Help
 If you need any help then let me know and I'll try to help you.
